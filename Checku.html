@@ -299,7 +299,11 @@ input, select, textarea{
   </div>
 </div>
 
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
+emailjs.init("B8IINZ3MoDAgCU58v"); // Public Key
+
 let selection = {
   gender: 'Male',
   type: 'One-Time',
@@ -315,14 +319,12 @@ function selectOption(el, group){
   el.classList.add('active');
   selection[group] = el.innerText;
 
-  // Auto-disable gift if subscription is selected
   if(group === 'type' && selection.type === 'Subscription'){
     const giftEl = document.getElementById('giftOption');
     giftEl.classList.remove('active');
     document.getElementById('giftBox').classList.remove('active');
     selection.gift = false;
   }
-
   updatePrice();
 }
 
@@ -342,17 +344,16 @@ function toggleGift(el){
 function updatePrice(){
   let priceText='';
   if(selection.type==='Subscription'){
-    priceText='Price: 200kr for 2 months';
+    priceText='200kr for 2 months';
   } else if(selection.type==='One-Time'){
-    priceText='Price: 150kr';
+    priceText='150kr';
   }
-  document.getElementById('priceDisplay').innerText = priceText;
+  document.getElementById('priceDisplay').innerText = 'Price: ' + priceText;
 }
 
 function continueOrder(){
   selection.message = document.querySelector("textarea").value;
 
-  // Replace form with shipping info form
   const container = document.getElementById('formContainer');
   container.innerHTML = `
   <div class="selection-box">
@@ -364,7 +365,7 @@ function continueOrder(){
     <input type="text" placeholder="Country" id="shipCountry">
     <input type="text" placeholder="Phone Number" id="shipPhone">
     <input type="email" placeholder="Email Address" id="shipEmail">
-    <textarea placeholder="Additional Notes"></textarea>
+    <textarea placeholder="Additional Notes" id="shipNotes"></textarea>
     <button class="continue-btn" onclick="submitOrder()">Submit Order</button>
   </div>`;
 }
@@ -377,10 +378,35 @@ function submitOrder(){
     city: document.getElementById('shipCity').value,
     country: document.getElementById('shipCountry').value,
     phone: document.getElementById('shipPhone').value,
-    email: document.getElementById('shipEmail').value
+    email: document.getElementById('shipEmail').value,
+    notes: document.getElementById('shipNotes').value
   };
-  console.log("ORDER:", selection, "SHIPPING:", shipping);
-  alert("Order submitted! Check console for details.");
+
+  const templateParams = {
+    gender: selection.gender,
+    type: selection.type,
+    gift: selection.gift ? "Yes" : "No",
+    message: selection.message || "None",
+    price: document.getElementById('priceDisplay').innerText.replace("Price: ",""),
+    name: shipping.name,
+    address: shipping.address,
+    postal: shipping.postal,
+    city: shipping.city,
+    country: shipping.country,
+    phone: shipping.phone,
+    email: shipping.email,
+    notes: shipping.notes || "None"
+  };
+
+  emailjs.send("service_ud5vane","template_t45j5hp",templateParams)
+    .then(() => {
+      alert("Order sent successfully! Check your email.");
+      document.getElementById('formContainer').innerHTML = "<h2 style='text-align:center; color:gold;'>Thank you! Your order has been sent.</h2>";
+    })
+    .catch((err) => {
+      console.error("EmailJS Error:", err);
+      alert("Failed to send order. Please try again.");
+    });
 }
 
 // Modal
