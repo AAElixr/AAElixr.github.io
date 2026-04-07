@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout - AA Fragrances</title>
+<link rel="icon" type="image/png" href="Facicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:Inter,sans-serif;
+  background: radial-gradient(circle at top, #0a0a0a, #050505);
+  color:white;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+
+.container{
+  width:400px;
+  position:relative;
+}
+
+.info-btn{
+  position:absolute;
+  top:-15px;
+  right:-15px;
+  background:transparent;
+  border:1px solid gold;
+  color:gold;
+  font-size:16px;
+  padding:6px 12px;
+  border-radius:50%;
+  cursor:pointer;
+  transition:.3s;
+  font-weight:bold;
+}
+.info-btn:hover{
+  background:gold;
+  color:black;
+  box-shadow:0 0 15px rgba(255,215,0,.5);
+}
+
+h1{
+  font-family:'Playfair Display',serif;
+  font-size:36px;
+  color:gold;
+  margin-bottom:15px;
+  text-align:center;
+  text-shadow: 0 0 15px rgba(255,215,0,.7);
+}
+
+.selection-box{
+  padding:30px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.02);
+  backdrop-filter: blur(10px);
+  position:relative;
+}
+
+.label{
+  color:#aaa;
+  margin-bottom:10px;
+  font-size:14px;
+}
+
+.select-group{
+  margin-bottom:20px;
+}
+
+.options{
+  display:flex;
+  gap:15px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.option{
+  padding:12px 25px;
+  border-radius:30px;
+  border:1px solid rgba(255,215,0,.3);
+  color:#bbb;
+  cursor:pointer;
+  transition:.3s;
+  text-align:center;
+}
+
+.option:hover{
+  border-color:gold;
+  color:gold;
+}
+
+.option.active{
+  background:gold;
+  color:black;
+  box-shadow:0 0 15px rgba(255,215,0,.6);
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+  0%{box-shadow:0 0 15px rgba(255,215,0,.6);}
+  50%{box-shadow:0 0 25px rgba(255,215,0,.8);}
+  100%{box-shadow:0 0 15px rgba(255,215,0,.6);}
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
+
+.shake { animation: shake 0.5s; }
+
+.gift-box{
+  max-height:0;
+  overflow:hidden;
+  transition:.4s ease;
+}
+
+.gift-box textarea{
+  width:100%;
+  margin-top:10px;
+  padding:15px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+  background:#111;
+  color:white;
+  resize:none;
+}
+
+.gift-box.active{
+  max-height:150px;
+}
+
+.continue-btn{
+  width:100%;
+  padding:18px;
+  border-radius:40px;
+  border:1px solid gold;
+  background:transparent;
+  color:gold;
+  font-size:18px;
+  cursor:pointer;
+  transition:.3s;
+  margin-top:15px;
+}
+.continue-btn:hover{
+  background:gold;
+  color:black;
+  box-shadow:0 0 25px rgba(255,215,0,.4);
+}
+
+.price{
+  color:gold;
+  text-align:center;
+  font-size:24px;
+  margin-bottom:20px;
+  text-shadow:0 0 10px rgba(255,215,0,.5);
+}
+
+.modal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.85);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
+}
+
+.modal.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.modal-content{
+  background:#111;
+  padding:30px;
+  border-radius:20px;
+  max-width:500px;
+  max-height:80vh;
+  overflow-y:auto;
+  border:2px solid gold;
+  box-shadow:0 0 25px rgba(255,215,0,.5);
+}
+
+.modal-content h2{ color:gold; margin-bottom:15px; }
+.modal-content p{ color:#bbb; margin-bottom:10px; line-height:1.5; }
+.modal-close{
+  position:absolute;
+  top:20px;
+  right:20px;
+  font-size:20px;
+  background:gold;
+  color:black;
+  border:none;
+  border-radius:50%;
+  width:35px;
+  height:35px;
+  cursor:pointer;
+  font-weight:bold;
+  line-height:1;
+}
+
+footer{
+  text-align:center;
+  padding:20px;
+  color:#666;
+  font-size:14px;
+  margin-top:30px;
+}
+
+input, select, textarea{
+  width:100%;
+  padding:12px 15px;
+  margin-bottom:15px;
+  border-radius:12px;
+  border:none;
+  background:#111;
+  color:white;
+  outline:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="formContainer">
+  <div class="selection-box">
+    <button class="info-btn" onclick="openModal()">i</button>
+    <h1>Finalize Your Order</h1>
+    <div class="price" id="priceDisplay">Price: 0kr</div>
+
+    <!-- GENDER -->
+    <div class="select-group">
+      <p class="label">Recipient</p>
+      <div class="options">
+        <div class="option active" onclick="selectOption(this,'gender')">Male</div>
+        <div class="option" onclick="selectOption(this,'gender')">Female</div>
+      </div>
+    </div>
+
+    <!-- TYPE -->
+    <div class="select-group">
+      <p class="label">Purchase Type</p>
+      <div class="options">
+        <div class="option" onclick="selectOption(this,'type')">Subscription</div>
+        <div class="option active" onclick="selectOption(this,'type')">One-Time</div>
+      </div>
+    </div>
+
+    <!-- GIFT -->
+    <div class="select-group">
+      <p class="label">Gift</p>
+      <div class="options">
+        <div class="option" id="giftOption" onclick="toggleGift(this)">Make it a Gift</div>
+      </div>
+    </div>
+
+    <div id="giftBox" class="gift-box">
+      <textarea placeholder="Write your message..."></textarea>
+    </div>
+
+    <button class="continue-btn" onclick="continueOrder()">Continue</button>
+  </div>
+</div>
+
+<footer>
+  © 2026 AA FRAGRANCES — FOUNDED BY ALI
+</footer>
+
+<div class="modal" id="infoModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2>Perfume Selection Form Instructions</h2>
+    <p><strong>Gender Option</strong></p>
+    <p><strong>Male:</strong> Designer cologne for men with bold, classic notes.</p>
+    <p><strong>Female:</strong> Designer perfume for women with delicate, captivating notes.</p>
+    <p><strong>Purchase Type</strong></p>
+    <p><strong>Single Buy:</strong> One-time purchase, optional gift.</p>
+    <p><strong>Subscription:</strong> Recurring monthly, cannot be gift.</p>
+    <p><strong>Gift Option</strong></p>
+    <p>Tick this box if the perfume is intended as a gift (disabled for subscription).</p>
+  </div>
+</div>
+
+<script>
+let selection = {
+  gender: 'Male',
+  type: 'One-Time',
+  gift: false,
+  message: ""
+};
+
+updatePrice();
+
+function selectOption(el, group){
+  let options = el.parentElement.querySelectorAll('.option');
+  options.forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  selection[group] = el.innerText;
+
+  // Auto-disable gift if subscription is selected
+  if(group === 'type' && selection.type === 'Subscription'){
+    const giftEl = document.getElementById('giftOption');
+    giftEl.classList.remove('active');
+    document.getElementById('giftBox').classList.remove('active');
+    selection.gift = false;
+  }
+
+  updatePrice();
+}
+
+function toggleGift(el){
+  if(selection.type==='Subscription'){
+    el.classList.add('shake');
+    setTimeout(()=>el.classList.remove('shake'),500);
+    return;
+  }
+  el.classList.toggle('active');
+  let box = document.getElementById('giftBox');
+  box.classList.toggle('active');
+  selection.gift = box.classList.contains('active');
+  updatePrice();
+}
+
+function updatePrice(){
+  let priceText='';
+  if(selection.type==='Subscription'){
+    priceText='Price: 200kr for 2 months';
+  } else if(selection.type==='One-Time'){
+    priceText='Price: 150kr';
+  }
+  document.getElementById('priceDisplay').innerText = priceText;
+}
+
+function continueOrder(){
+  selection.message = document.querySelector("textarea").value;
+
+  // Replace form with shipping info form
+  const container = document.getElementById('formContainer');
+  container.innerHTML = `
+  <div class="selection-box">
+    <h1>Shipping Information</h1>
+    <input type="text" placeholder="Full Name" id="shipName">
+    <input type="text" placeholder="Street Address" id="shipAddress">
+    <input type="text" placeholder="Postal Code" id="shipPostal">
+    <input type="text" placeholder="City" id="shipCity">
+    <input type="text" placeholder="Country" id="shipCountry">
+    <input type="text" placeholder="Phone Number" id="shipPhone">
+    <input type="email" placeholder="Email Address" id="shipEmail">
+    <textarea placeholder="Additional Notes"></textarea>
+    <button class="continue-btn" onclick="submitOrder()">Submit Order</button>
+  </div>`;
+}
+
+function submitOrder(){
+  const shipping = {
+    name: document.getElementById('shipName').value,
+    address: document.getElementById('shipAddress').value,
+    postal: document.getElementById('shipPostal').value,
+    city: document.getElementById('shipCity').value,
+    country: document.getElementById('shipCountry').value,
+    phone: document.getElementById('shipPhone').value,
+    email: document.getElementById('shipEmail').value
+  };
+  console.log("ORDER:", selection, "SHIPPING:", shipping);
+  alert("Order submitted! Check console for details.");
+}
+
+// Modal
+function openModal(){ document.getElementById('infoModal').classList.add('active'); }
+function closeModal(){ document.getElementById('infoModal').classList.remove('active'); }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/png" href="Facicon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home - Page</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:Inter,sans-serif;
+  background: radial-gradient(circle at top, #0a0a0a, #050505);
+  color:white;
+  overflow-x:hidden;
+}
+
+/* HERO */
+.hero{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+}
+
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:60px;
+  color:gold;
+  letter-spacing:3px;
+}
+
+.hero p{
+  color:#bbb;
+  max-width:600px;
+  margin:15px 0 30px;
+}
+
+/* BUTTON */
+.btn{
+  padding:14px 34px;
+  border-radius:30px;
+  border:1px solid gold;
+  background:transparent;
+  color:gold;
+  cursor:pointer;
+  transition:.3s;
+  font-weight:500;
+}
+
+.btn:hover{
+  background:gold;
+  color:black;
+  box-shadow:0 0 25px rgba(255,215,0,.4);
+  transform:translateY(-2px);
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:30px;
+  color:#666;
+}
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+  <h1>AA Fragrances</h1>
+  <p>Luxury scents. Delivered monthly. Discover your signature fragrance.</p>
+
+  <button class="btn" onclick="window.location.href='ord.html'">
+    Explore
+  </button>
+</div>
+
+<footer>
+  © 2026 AA FRAGRANCES — FOUNDED BY ALI
+</footer>
+
+</body>
+</html>
