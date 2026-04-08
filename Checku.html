@@ -7,246 +7,56 @@
 <link rel="icon" type="image/png" href="Facicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
+<!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=AZbNFsn-Hud08kPGHbMJGELFh4q1fPco5656jTQVOzuEEJw_z78qowNGBRE5fnuBbXxt5VVtIJePStVq&currency=SEK"></script>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-
-body{
-  font-family:Inter,sans-serif;
-  background: radial-gradient(circle at top, #0a0a0a, #050505);
-  color:white;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-}
-
-.container{
-  width:400px;
-  position:relative;
-}
-
-.info-btn{
-  position:absolute;
-  top:-15px;
-  right:-15px;
-  background:transparent;
-  border:1px solid gold;
-  color:gold;
-  font-size:16px;
-  padding:6px 12px;
-  border-radius:50%;
-  cursor:pointer;
-  transition:.3s;
-  font-weight:bold;
-}
-.info-btn:hover{
-  background:gold;
-  color:black;
-  box-shadow:0 0 15px rgba(255,215,0,.5);
-}
-
-h1{
-  font-family:'Playfair Display',serif;
-  font-size:36px;
-  color:gold;
-  margin-bottom:15px;
-  text-align:center;
-  text-shadow: 0 0 15px rgba(255,215,0,.7);
-}
-
-.selection-box{
-  padding:30px;
-  border-radius:20px;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.02);
-  backdrop-filter: blur(10px);
-  position:relative;
-}
-
-.label{
-  color:#aaa;
-  margin-bottom:10px;
-  font-size:14px;
-}
-
-.select-group{
-  margin-bottom:20px;
-}
-
-.options{
-  display:flex;
-  gap:15px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-
-.option{
-  padding:12px 25px;
-  border-radius:30px;
-  border:1px solid rgba(255,215,0,.3);
-  color:#bbb;
-  cursor:pointer;
-  transition:.3s;
-  text-align:center;
-}
-
-.option:hover{
-  border-color:gold;
-  color:gold;
-}
-
-.option.active{
-  background:gold;
-  color:black;
-  box-shadow:0 0 15px rgba(255,215,0,.6);
-  animation: pulse 1.2s infinite;
-}
-
-@keyframes pulse{
-  0%{box-shadow:0 0 15px rgba(255,215,0,.6);}
-  50%{box-shadow:0 0 25px rgba(255,215,0,.8);}
-  100%{box-shadow:0 0 15px rgba(255,215,0,.6);}
-}
-
-@keyframes shake {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(-5px); }
-  40% { transform: translateX(5px); }
-  60% { transform: translateX(-5px); }
-  80% { transform: translateX(5px); }
-  100% { transform: translateX(0); }
-}
-
+body{font-family:Inter,sans-serif;background: radial-gradient(circle at top, #0a0a0a, #050505);color:white;min-height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column;}
+.container{ width:400px; position:relative; }
+.info-btn{ position:absolute; top:-15px; right:-15px; background:transparent; border:1px solid gold; color:gold; font-size:16px; padding:6px 12px; border-radius:50%; cursor:pointer; transition:.3s; font-weight:bold; }
+.info-btn:hover{ background:gold; color:black; box-shadow:0 0 15px rgba(255,215,0,.5); }
+h1{ font-family:'Playfair Display',serif; font-size:36px; color:gold; margin-bottom:15px; text-align:center; text-shadow: 0 0 15px rgba(255,215,0,.7);}
+.selection-box{ padding:30px; border-radius:20px; border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.02); backdrop-filter: blur(10px); position:relative;}
+.label{ color:#aaa; margin-bottom:10px; font-size:14px; }
+.select-group{ margin-bottom:20px; }
+.options{ display:flex; gap:15px; flex-wrap:wrap; justify-content:center; }
+.option{ padding:12px 25px; border-radius:30px; border:1px solid rgba(255,215,0,.3); color:#bbb; cursor:pointer; transition:.3s; text-align:center; }
+.option:hover{ border-color:gold; color:gold; }
+.option.active{ background:gold; color:black; box-shadow:0 0 15px rgba(255,215,0,.6); animation: pulse 1.2s infinite; }
+@keyframes pulse{ 0%{box-shadow:0 0 15px rgba(255,215,0,.6);} 50%{box-shadow:0 0 25px rgba(255,215,0,.8);} 100%{box-shadow:0 0 15px rgba(255,215,0,.6);} }
+@keyframes shake { 0% { transform: translateX(0); } 20% { transform: translateX(-5px); } 40% { transform: translateX(5px); } 60% { transform: translateX(-5px); } 80% { transform: translateX(5px); } 100% { transform: translateX(0); } }
 .shake { animation: shake 0.5s; }
-
-.gift-box{
-  max-height:0;
-  overflow:hidden;
-  transition:.4s ease;
-}
-
-.gift-box textarea{
-  width:100%;
-  margin-top:10px;
-  padding:15px;
-  border-radius:12px;
-  border:none;
-  outline:none;
-  background:#111;
-  color:white;
-  resize:none;
-}
-
-.gift-box.active{
-  max-height:150px;
-}
-
-.continue-btn{
-  width:100%;
-  padding:18px;
-  border-radius:40px;
-  border:1px solid gold;
-  background:transparent;
-  color:gold;
-  font-size:18px;
-  cursor:pointer;
-  transition:.3s;
-  margin-top:15px;
-}
-.continue-btn:hover{
-  background:gold;
-  color:black;
-  box-shadow:0 0 25px rgba(255,215,0,.4);
-}
-
-.price{
-  color:gold;
-  text-align:center;
-  font-size:24px;
-  margin-bottom:20px;
-  text-shadow:0 0 10px rgba(255,215,0,.5);
-}
-
-.modal{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,.85);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  opacity:0;
-  pointer-events:none;
-  transition:.3s;
-}
-
-.modal.active{
-  opacity:1;
-  pointer-events:auto;
-}
-
-.modal-content{
-  background:#111;
-  padding:30px;
-  border-radius:20px;
-  max-width:500px;
-  max-height:80vh;
-  overflow-y:auto;
-  border:2px solid gold;
-  box-shadow:0 0 25px rgba(255,215,0,.5);
-}
-
+.gift-box{ max-height:0; overflow:hidden; transition:.4s ease; }
+.gift-box textarea{ width:100%; margin-top:10px; padding:15px; border-radius:12px; border:none; outline:none; background:#111; color:white; resize:none;}
+.gift-box.active{ max-height:150px; }
+.continue-btn{ width:100%; padding:18px; border-radius:40px; border:1px solid gold; background:transparent; color:gold; font-size:18px; cursor:pointer; transition:.3s; margin-top:15px;}
+.continue-btn:hover{ background:gold; color:black; box-shadow:0 0 25px rgba(255,215,0,.4); }
+.price{ color:gold; text-align:center; font-size:24px; margin-bottom:20px; text-shadow:0 0 10px rgba(255,215,0,.5);}
+.modal{ position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.85); display:flex; justify-content:center; align-items:center; opacity:0; pointer-events:none; transition:.3s;}
+.modal.active{ opacity:1; pointer-events:auto;}
+.modal-content{ background:#111; padding:30px; border-radius:20px; max-width:500px; max-height:80vh; overflow-y:auto; border:2px solid gold; box-shadow:0 0 25px rgba(255,215,0,.5);}
 .modal-content h2{ color:gold; margin-bottom:15px; }
 .modal-content p{ color:#bbb; margin-bottom:10px; line-height:1.5; }
-.modal-close{
-  position:absolute;
-  top:20px;
-  right:20px;
-  font-size:20px;
-  background:gold;
-  color:black;
-  border:none;
-  border-radius:50%;
-  width:35px;
-  height:35px;
-  cursor:pointer;
-  font-weight:bold;
-  line-height:1;
-}
-
-footer{
-  text-align:center;
-  padding:20px;
-  color:#666;
-  font-size:14px;
-  margin-top:30px;
-}
-
-input, select, textarea{
-  width:100%;
-  padding:12px 15px;
-  margin-bottom:15px;
-  border-radius:12px;
-  border:none;
-  background:#111;
-  color:white;
-  outline:none;
-}
+.modal-close{ position:absolute; top:20px; right:20px; font-size:20px; background:gold; color:black; border:none; border-radius:50%; width:35px; height:35px; cursor:pointer; font-weight:bold; line-height:1; }
+footer{ text-align:center; padding:20px; color:#666; font-size:14px; margin-top:30px; }
+input, select, textarea{ width:100%; padding:12px 15px; margin-bottom:15px; border-radius:12px; border:none; background:#111; color:white; outline:none; }
+input.invalid, textarea.invalid{ border:2px solid red; }
+#errorBox{ background:rgba(255,0,0,0.8); color:white; padding:15px; margin-bottom:15px; border-radius:12px; display:none; text-align:center; font-weight:bold; }
 </style>
 </head>
-
 <body>
 
 <div class="container" id="formContainer">
-  <div class="selection-box">
+
+  <div id="errorBox"></div>
+
+  <div class="selection-box" id="selectionBox">
     <button class="info-btn" onclick="openModal()">i</button>
     <h1>Finalize Your Order</h1>
     <div class="price" id="priceDisplay">Price: 0kr</div>
 
-    <!-- GENDER -->
     <div class="select-group">
       <p class="label">Recipient</p>
       <div class="options">
@@ -255,7 +65,6 @@ input, select, textarea{
       </div>
     </div>
 
-    <!-- TYPE -->
     <div class="select-group">
       <p class="label">Purchase Type</p>
       <div class="options">
@@ -264,7 +73,6 @@ input, select, textarea{
       </div>
     </div>
 
-    <!-- GIFT -->
     <div class="select-group">
       <p class="label">Gift</p>
       <div class="options">
@@ -273,90 +81,13 @@ input, select, textarea{
     </div>
 
     <div id="giftBox" class="gift-box">
-      <textarea placeholder="Write your message..."></textarea>
+      <textarea id="giftMessage" placeholder="Write your message..."></textarea>
     </div>
 
-    <button class="continue-btn" onclick="continueOrder()">Continue</button>
+    <button class="continue-btn" id="continueBtn">Continue</button>
   </div>
-</div>
 
-<footer>
-  © 2026 AA FRAGRANCES — FOUNDED BY ALI
-</footer>
-
-<div class="modal" id="infoModal">
-  <div class="modal-content">
-    <button class="modal-close" onclick="closeModal()">×</button>
-    <h2>Perfume Selection Form Instructions</h2>
-    <p><strong>Gender Option</strong></p>
-    <p><strong>Male:</strong> Designer cologne for men with bold, classic notes.</p>
-    <p><strong>Female:</strong> Designer perfume for women with delicate, captivating notes.</p>
-    <p><strong>Purchase Type</strong></p>
-    <p><strong>Single Buy:</strong> One-time purchase, optional gift.</p>
-    <p><strong>Subscription:</strong> Recurring monthly, cannot be gift.</p>
-    <p><strong>Gift Option</strong></p>
-    <p>Tick this box if the perfume is intended as a gift (disabled for subscription).</p>
-  </div>
-</div>
-
-<!-- EmailJS SDK -->
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script>
-emailjs.init("B8IINZ3MoDAgCU58v"); // Public Key
-
-let selection = {
-  gender: 'Male',
-  type: 'One-Time',
-  gift: false,
-  message: ""
-};
-
-updatePrice();
-
-function selectOption(el, group){
-  let options = el.parentElement.querySelectorAll('.option');
-  options.forEach(o => o.classList.remove('active'));
-  el.classList.add('active');
-  selection[group] = el.innerText;
-
-  if(group === 'type' && selection.type === 'Subscription'){
-    const giftEl = document.getElementById('giftOption');
-    giftEl.classList.remove('active');
-    document.getElementById('giftBox').classList.remove('active');
-    selection.gift = false;
-  }
-  updatePrice();
-}
-
-function toggleGift(el){
-  if(selection.type==='Subscription'){
-    el.classList.add('shake');
-    setTimeout(()=>el.classList.remove('shake'),500);
-    return;
-  }
-  el.classList.toggle('active');
-  let box = document.getElementById('giftBox');
-  box.classList.toggle('active');
-  selection.gift = box.classList.contains('active');
-  updatePrice();
-}
-
-function updatePrice(){
-  let priceText='';
-  if(selection.type==='Subscription'){
-    priceText='200kr for 2 months';
-  } else if(selection.type==='One-Time'){
-    priceText='150kr';
-  }
-  document.getElementById('priceDisplay').innerText = 'Price: ' + priceText;
-}
-
-function continueOrder(){
-  selection.message = document.querySelector("textarea").value;
-
-  const container = document.getElementById('formContainer');
-  container.innerHTML = `
-  <div class="selection-box">
+  <div class="selection-box" id="shippingBox" style="display:none;">
     <h1>Shipping Information</h1>
     <input type="text" placeholder="Full Name" id="shipName">
     <input type="text" placeholder="Street Address" id="shipAddress">
@@ -366,53 +97,182 @@ function continueOrder(){
     <input type="text" placeholder="Phone Number" id="shipPhone">
     <input type="email" placeholder="Email Address" id="shipEmail">
     <textarea placeholder="Additional Notes" id="shipNotes"></textarea>
-    <button class="continue-btn" onclick="submitOrder()">Submit Order</button>
-  </div>`;
+
+    <!-- PAYPAL BUTTON -->
+    <div id="paypal-button-container"></div>
+  </div>
+
+</div>
+
+<footer>© 2026 AA FRAGRANCES — FOUNDED BY ALI</footer>
+
+<div class="modal" id="infoModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2>Perfume Selection Form Instructions:</h2>
+    <p><strong>Gender Option</strong></p>
+    <p><strong>Male:</strong> Select this if you want a designer cologne for men. These fragrances feature bold and classic notes, sourced from authentic designer brands.</p>
+    <p><strong>Female:</strong> Select this if you want a designer perfume for women. These fragrances have delicate and captivating notes, also from authentic designer brands.</p>
+    <p><strong>Purchase Type</strong></p>
+    <p><strong>Single Buy:</strong> Choose this to purchase a one-time perfume. This option can also be sent as a gift with elegant packaging and an optional personal message.</p>
+    <p><strong>Subscription:</strong> Choose this if you want to receive your selected perfume on a recurring monthly basis. Available for both male and female options, subscriptions can also be sent as a gift.</p>
+    <p><strong>Gift Option (Checkbox)</strong></p>
+    <p>Tick this box if the perfume is intended as a gift. This will include special packaging and an option to add a personalized note.</p>
+  </div>
+</div>
+
+<script>
+emailjs.init("B8IINZ3MoDAgCU58v");
+
+let selection = {gender:'Male', type:'One-Time', gift:false, message:""};
+
+function showError(msg){
+  const box = document.getElementById('errorBox');
+  box.innerText = msg;
+  box.style.display='block';
+  setTimeout(()=>{ box.style.display='none'; },4000);
 }
 
-function submitOrder(){
-  const shipping = {
-    name: document.getElementById('shipName').value,
-    address: document.getElementById('shipAddress').value,
-    postal: document.getElementById('shipPostal').value,
-    city: document.getElementById('shipCity').value,
-    country: document.getElementById('shipCountry').value,
-    phone: document.getElementById('shipPhone').value,
-    email: document.getElementById('shipEmail').value,
-    notes: document.getElementById('shipNotes').value
-  };
-
-  const templateParams = {
-    gender: selection.gender,
-    type: selection.type,
-    gift: selection.gift ? "Yes" : "No",
-    message: selection.message || "None",
-    price: document.getElementById('priceDisplay').innerText.replace("Price: ",""),
-    name: shipping.name,
-    address: shipping.address,
-    postal: shipping.postal,
-    city: shipping.city,
-    country: shipping.country,
-    phone: shipping.phone,
-    email: shipping.email,
-    notes: shipping.notes || "None"
-  };
-
-  emailjs.send("service_ud5vane","template_t45j5hp",templateParams)
-    .then(() => {
-      alert("Order sent successfully! Check your email.");
-      document.getElementById('formContainer').innerHTML = "<h2 style='text-align:center; color:gold;'>Thank you! Your order has been sent.</h2>";
-    })
-    .catch((err) => {
-      console.error("EmailJS Error:", err);
-      alert("Failed to send order. Please try again.");
-    });
+function selectOption(el, group){
+  let options = el.parentElement.querySelectorAll('.option');
+  options.forEach(o=>o.classList.remove('active'));
+  el.classList.add('active');
+  selection[group] = el.innerText;
+  if(group==='type' && selection.type==='Subscription'){
+    document.getElementById('giftOption').classList.remove('active');
+    document.getElementById('giftBox').classList.remove('active');
+    selection.gift = false;
+  }
+  updatePrice();
 }
 
-// Modal
+function toggleGift(el){
+  if(selection.type==='Subscription'){ el.classList.add('shake'); setTimeout(()=>el.classList.remove('shake'),500); return; }
+  el.classList.toggle('active');
+  document.getElementById('giftBox').classList.toggle('active');
+  selection.gift = document.getElementById('giftBox').classList.contains('active');
+  updatePrice();
+}
+
+function updatePrice(){
+  let priceText = selection.type==='Subscription' ? '200kr for 2 months' : '150kr';
+  document.getElementById('priceDisplay').innerText = 'Price: ' + priceText;
+}
+
+document.getElementById('continueBtn').addEventListener('click',()=>{
+  selection.message = document.getElementById('giftMessage').value.trim();
+  if(selection.gift && !selection.message){ showError("Please write a gift message."); return; }
+  document.getElementById('selectionBox').style.display='none';
+  document.getElementById('shippingBox').style.display='block';
+});
+
 function openModal(){ document.getElementById('infoModal').classList.add('active'); }
 function closeModal(){ document.getElementById('infoModal').classList.remove('active'); }
-</script>
 
+// VALIDATION
+function validateForm(){
+  const shipping = {
+    name: document.getElementById('shipName').value.trim(),
+    address: document.getElementById('shipAddress').value.trim(),
+    postal: document.getElementById('shipPostal').value.trim(),
+    city: document.getElementById('shipCity').value.trim(),
+    country: document.getElementById('shipCountry').value.trim(),
+    phone: document.getElementById('shipPhone').value.trim(),
+    email: document.getElementById('shipEmail').value.trim()
+  };
+
+  let valid = true;
+
+  document.querySelectorAll('#shippingBox input, #shippingBox textarea').forEach(el=>el.classList.remove('invalid'));
+
+  if(!shipping.name){ document.getElementById('shipName').classList.add('invalid'); valid=false; }
+  if(!shipping.address){ document.getElementById('shipAddress').classList.add('invalid'); valid=false; }
+  if(!shipping.postal){ document.getElementById('shipPostal').classList.add('invalid'); valid=false; }
+  if(!shipping.city){ document.getElementById('shipCity').classList.add('invalid'); valid=false; }
+  if(!shipping.country){ document.getElementById('shipCountry').classList.add('invalid'); valid=false; }
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if(!emailPattern.test(shipping.email)){ document.getElementById('shipEmail').classList.add('invalid'); valid=false; }
+
+  const phonePattern = /^\+?\d{7,15}$/;
+  if(!phonePattern.test(shipping.phone)){ document.getElementById('shipPhone').classList.add('invalid'); valid=false; }
+
+  if(!valid){ showError("Please fill in all required fields correctly."); }
+  return valid;
+}
+
+// PAYPAL BUTTON
+function getPriceValue(){
+  return selection.type==='Subscription' ? '200.00' : '1.00';
+}
+
+paypal.Buttons({
+
+ createOrder: function(data, actions) {
+    if(!validateForm()) return;
+    return actions.order.create({
+      purchase_units: [{
+        amount: { value: getPriceValue() }
+      }],
+      application_context: {
+        shipping_preference: 'NO_SHIPPING' // disables PayPal asking for address
+      }
+    });
+  },
+
+ onApprove: function(data, actions) {
+    return actions.order.capture().then(function(details) {
+
+      const shipping = {
+        name: document.getElementById('shipName').value.trim(),
+        address: document.getElementById('shipAddress').value.trim(),
+        postal: document.getElementById('shipPostal').value.trim(),
+        city: document.getElementById('shipCity').value.trim(),
+        country: document.getElementById('shipCountry').value.trim(),
+        phone: document.getElementById('shipPhone').value.trim(),
+        email: document.getElementById('shipEmail').value.trim(),
+        notes: document.getElementById('shipNotes').value.trim()
+      };
+
+      const templateParams = {
+        gender: selection.gender,
+        type: selection.type,
+        gift: selection.gift ? "Yes":"No",
+        message: selection.message || "None",
+        price: getPriceValue() + " kr",
+        name: shipping.name,
+        address: shipping.address,
+        postal: shipping.postal,
+        city: shipping.city,
+        country: shipping.country,
+        phone: shipping.phone,
+        email: shipping.email,
+        notes: shipping.notes || "None"
+      };
+
+      emailjs.send("service_ud5vane","template_t45j5hp", templateParams)
+        .then(()=>{
+          alert("✅ Payment successful & order sent!");
+          // redirect to Thank You page
+          window.location.href = "Thanks.html";
+        })
+        .catch(err=>{
+          console.error(err);
+          alert("Payment ok, but email failed.");
+        });
+
+    });
+  },
+
+  onError: function(err) {
+    console.error(err);
+    alert("Payment failed.");
+  }
+
+}).render('#paypal-button-container');
+
+// Set initial price on page load
+updatePrice();
+</script>
 </body>
 </html>
